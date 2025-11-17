@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import shutil
 import os
+import string
 import tqdm
 
 
@@ -35,6 +36,9 @@ def secret_santa(file_path):
         gift_receivers.pop(receiver_index)
         receiver_interests.pop(receiver_index)
 
+        # Add a random length string
+        rand_string = np.random.choice(list(string.ascii_letters), np.random.randint(10_000, 100_000), replace=True)
+
         with open(f'output/{giver}.txt', 'w') as f:
             f.write(f'Hellohohohoho {giver}!\n')
             f.write(f'\n')
@@ -42,9 +46,13 @@ def secret_santa(file_path):
             f.write(f'Their interests are:\n')
             f.write(f'\n')
             f.writelines(receiver_interest)
+            f.write('\n\n')
+            f.write('String buffer so not even santa knows who you got:')
+            f.write(f'\n')
+            f.write(''.join(rand_string))
 
 
 if __name__ == '__main__':
     n_it = np.random.randint(100)
     for i in tqdm.tqdm(range(n_it)):
-        secret_santa('SECRET SECRET SANTA.xlsx')
+        secret_santa('2025 SECRET SECRET SANTA.xlsx')
